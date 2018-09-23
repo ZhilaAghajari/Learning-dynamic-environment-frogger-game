@@ -65,3 +65,24 @@ def jugs_check_goal(state,config):
         return True
     else:
         return False
+
+
+#-------------------------------------Cities-------------------------------------------------
+def cities_get_successor_state(ST,config):
+    state = copy.deepcopy(ST) #copy arument
+    #we have cities connection like this config.source = "start if a path" , config.destination = "end of a path"
+    #config.cost = cost of that path*distance 
+    source_ind = [i for (i, x) in enumerate(config.source) if x==state[0]]
+    if(len(source_ind)==1): #only one option
+        ra = 0
+    else: #more than one option
+        ra = random.randint(0,len(source_ind)-1) #select a possible path randomly
+    state[0] = config.destination[source_ind[ra]] #select a city as destination
+    state[1] = config.cost[source_ind[ra]] #set the cost for the path
+    return state
+
+def cities_check_goal(state,config):
+    if(state[0]==config.goal): #if the city of current state is equal to goal then we reach the point
+        return True
+    else:
+        return False
